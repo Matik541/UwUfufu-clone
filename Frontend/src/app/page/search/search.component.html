@@ -1,0 +1,28 @@
+<form class="example-form" (submit)="search()">
+  <mat-form-field appearance="outline" class="search">
+    <input type="text"
+           placeholder="Search"
+           aria-label="Search"
+           matInput
+           [formControl]="searchControl"
+           [matAutocomplete]="auto">
+
+           
+  <mat-icon matPrefix>search</mat-icon>
+
+  <button type="reset" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (suggestion of filteredSuggestions | async; track suggestion) {
+        <mat-option [value]="suggestion" (click)="search()"> 
+          <mat-icon >history</mat-icon>
+          <span>{{suggestion}}</span>
+          <mat-icon style="order: 999;" color="primary">north_west</mat-icon>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+
+</form>
