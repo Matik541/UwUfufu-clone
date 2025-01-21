@@ -12,7 +12,7 @@ export class SearchService {
   getSearchHistory() {
     let searchHistory = this.CookiesService.get('search-history');
 
-    searchHistory = '["' + searchHistory.replace(", ", '", "') + '"]'; 
+    if (!searchHistory) return [];
 
     this.searchHistory = JSON.parse(searchHistory) || [];
 
@@ -29,9 +29,10 @@ export class SearchService {
 
     // store last 10 searches
     this.searchHistory.unshift(value);
-    const uniqueHistory = [...new Set(this.searchHistory)];
-    const trimmedHistory = uniqueHistory.slice(0, 10);
-
+    let uniqueHistory = [...new Set(this.searchHistory)];
+    let trimmedHistory = uniqueHistory.slice(0, 10);
+    trimmedHistory = trimmedHistory.map(cookie => cookie.replace(/,/g, ';'));
+ 
     this.CookiesService.set('search-history', trimmedHistory.join(','));
 
     return trimmedHistory;
