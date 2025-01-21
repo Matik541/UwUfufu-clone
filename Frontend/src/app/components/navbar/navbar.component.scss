@@ -1,0 +1,13 @@
+nav {
+    background-color: var(--mat-sys-primary-container);
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    nav-search {  
+      width: 50vw;
+    }
+}

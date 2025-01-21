@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 import { SearchService } from './search.service';
 
 @Component({
-  selector: 'app-search',
+  selector: 'nav-search',
   imports: [
     MatFormFieldModule,
     MatInputModule,

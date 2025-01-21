@@ -20,10 +20,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 // Custom styles for Angular Material components
-.search {
-  --mdc-outlined-text-field-container-shape: 28px !important;
+.form-full-width {
+  width: 100%;
+}
 
-  .mat-mdc-form-field-icon-suffix {
-    padding-right: 8px;
-  }
+.flex-spacer {
+  flex-grow: 1;
 }
