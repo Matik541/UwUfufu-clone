@@ -27,3 +27,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .flex-spacer {
   flex-grow: 1;
 }
+
+.search .mat-mdc-form-field-icon-suffix {
+  padding-right: 8px;
+}

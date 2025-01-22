@@ -1,13 +1,18 @@
 nav {
-    background-color: var(--mat-sys-primary-container);
-    color: white;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
+  background-color: var(--mat-sys-primary-container);
+  color: white;
+  padding: 16px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
 
-    nav-search {  
-      width: 50vw;
-    }
+  .half {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  nav-search {
+    width: 100%;
+  }
 }
