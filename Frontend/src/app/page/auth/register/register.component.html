@@ -5,10 +5,18 @@
       <input matInput type="email" name="email" required />
     </mat-form-field>
 
+    @if (email.invalid) {
+    <mat-error>{{ email }}</mat-error>
+    }
+
     <mat-form-field class="form-full-width" appearance="outline">
       <mat-label>Username</mat-label>
       <input matInput type="text" name="username" required />
     </mat-form-field>
+
+    @if (username.invalid) {
+    <mat-error>{{ username.getError }}</mat-error>
+    }
 
     <mat-form-field class="form-full-width" appearance="outline">
       <mat-label>Password</mat-label>
@@ -16,8 +24,8 @@
       <mat-hint></mat-hint>
     </mat-form-field>
 
-    @if (!!error) {
-    <mat-error>{{ error }}</mat-error>
+    @if (password.errors) {
+    <mat-error>Password is required</mat-error>
     }
 
     <button type="submit" mat-flat-button (click)="register()">Sign up</button>

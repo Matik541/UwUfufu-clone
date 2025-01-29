@@ -56,6 +56,9 @@ export class RegisterComponent {
   }
 
   register() {
+    console.log(this.email)
+    console.log(this.password)
+
     this.error = '';
 
     let response: any = this.registerService.register(
