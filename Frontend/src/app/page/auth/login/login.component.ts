@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LoginService } from './login.service';
 import { MatIconModule } from '@angular/material/icon';
+import { OauthComponent } from '../../../components/oauth/oauth.component';
 
 @Component({
   selector: 'auth-login',
@@ -16,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    OauthComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

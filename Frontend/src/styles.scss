@@ -7,7 +7,7 @@ html {
   @include mat.theme((
     color: (
       theme-type: light,
-      primary: mat.$rose-palette,
+      primary: mat.$spring-green-palette,
       tertiary: mat.$red-palette,
     ),
     typography: Roboto,
