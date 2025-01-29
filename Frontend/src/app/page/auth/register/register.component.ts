@@ -3,7 +3,6 @@ import {
   FormsModule,
   FormControl,
   Validators,
-  AbstractControl,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { RegisterService } from './register.service';
+import { OauthComponent } from '../../../components/oauth/oauth.component';
 
 @Component({
   selector: 'auth-register',
@@ -21,6 +21,7 @@ import { RegisterService } from './register.service';
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
+    OauthComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -47,12 +48,6 @@ export class RegisterComponent {
   ]);
 
   constructor(private registerService: RegisterService) {
-    this.email.valueChanges.subscribe((value) => {
-      let response: any = this.registerService.checkEmail(value);
-      if (response.error) {
-        this.error = response.error;
-      }
-    });
   }
 
   register() {

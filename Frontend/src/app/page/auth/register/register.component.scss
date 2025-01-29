@@ -6,10 +6,12 @@
   overflow: hidden;
 }
 
-form, .oauth2 {
+form {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
+
 
 .divider-group {
   display: flex;
