@@ -1,34 +1,51 @@
 <div class="auth-container">
-  <form>
+  <form [formGroup]="signUpForm" (ngSubmit)="register()">
     <mat-form-field class="form-full-width" appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput type="email" name="email" required />
-    </mat-form-field>
+      <input matInput type="email" formControlName="email" name="email" required />
 
-    @if (email.invalid) {
-    <mat-error>{{ email }}</mat-error>
-    }
+      @if (signUpForm.get('email')?.hasError('required')) {
+        <mat-error>Email required</mat-error>
+      }
+      @if (signUpForm.get('email')?.hasError('email')) {
+        <mat-error>Invalid email</mat-error>
+      }
+
+    </mat-form-field>
 
     <mat-form-field class="form-full-width" appearance="outline">
       <mat-label>Username</mat-label>
-      <input matInput type="text" name="username" required />
-    </mat-form-field>
+      <input matInput type="text" formControlName="username" name="username" required />
 
-    @if (username.invalid) {
-    <mat-error>{{ username.getError }}</mat-error>
-    }
+      @if (signUpForm.get('username')?.hasError('required')) {
+        <mat-error>Username required</mat-error>
+      }
+      @if (signUpForm.get('username')?.hasError('minlength')) {
+        <mat-error>Username must be at least {{ 4 }} characters</mat-error>
+      }
+      @if (signUpForm.get('username')?.hasError('pattern')) {
+        <mat-error>Username can contain only characters and numbers</mat-error>
+      }
+    </mat-form-field>
 
     <mat-form-field class="form-full-width" appearance="outline">
       <mat-label>Password</mat-label>
-      <input matInput type="password" name="password" required />
-      <mat-hint></mat-hint>
+      <input matInput type="password" formControlName="password" name="password" required />
+
+      @if (signUpForm.get('password')?.hasError('required')) {
+        <mat-error>Password required</mat-error>
+      }
+      @if (signUpForm.get('password')?.hasError('minlength')) {
+        <mat-error>Password must be at least {{ 8 }} characters</mat-error>
+      }
+      @if (signUpForm.get('password')?.hasError('pattern')) {
+        <mat-error>Password must contain at least one uppercase, one lowercase, one number and one special character</mat-error>
+      }
+
+
     </mat-form-field>
 
-    @if (password.errors) {
-    <mat-error>Password is required</mat-error>
-    }
-
-    <button type="submit" mat-flat-button (click)="register()">Sign up</button>
+    <button type="submit" mat-flat-button>Sign up</button>
   </form>
 
   <div class="divider-group">

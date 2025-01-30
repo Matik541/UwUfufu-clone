@@ -4,6 +4,7 @@ import {
   FormControl,
   Validators,
   ReactiveFormsModule,
+  FormGroup,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,37 +30,35 @@ import { OauthComponent } from '../../../components/oauth/oauth.component';
 export class RegisterComponent {
   error: string = '';
 
-  email: FormControl = new FormControl('', [
-    Validators.email,
-    Validators.required,
-  ]);
-  username: FormControl = new FormControl('', [
-    Validators.minLength(4),
-    Validators.required,
-  ]);
-  password: FormControl = new FormControl('', [
-    Validators.minLength(8),
-    Validators.required,
-    Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
-  ]);
-  passwordConfirm: FormControl = new FormControl('', [
-    Validators.minLength(8),
-    Validators.required,
-  ]);
+  signUpForm: FormGroup = new FormGroup({
+    email: new FormControl('', [
+      Validators.email,
+      Validators.required,
+    ]),
+    username: new FormControl('', [
+      Validators.minLength(4),
+      Validators.required,
+      Validators.pattern(/^[a-zA-Z0-9]*$/),
+    ]),
+    password: new FormControl('', [
+      Validators.minLength(8),
+      Validators.required,
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
+    ])
+  });
 
   constructor(private registerService: RegisterService) {
   }
 
   register() {
-    console.log(this.email)
-    console.log(this.password)
+    console.log(this.signUpForm.value);
 
     this.error = '';
 
     let response: any = this.registerService.register(
-      this.email.value,
-      this.username.value,
-      this.password.value
+      this.signUpForm.value.email,
+      this.signUpForm.value.username,
+      this.signUpForm.value.password
     );
 
     if (response.error) {
