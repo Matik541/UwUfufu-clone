@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   FormsModule,
   FormControl,
@@ -13,6 +13,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { RegisterService } from './register.service';
 import { OauthComponent } from '../../../components/oauth/oauth.component';
 import { MatIconModule } from '@angular/material/icon';
+import { merge } from 'rxjs';
+import { response } from 'express';
 
 @Component({
   selector: 'auth-register',
@@ -24,49 +26,80 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatDividerModule,
     OauthComponent,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  error: string = '';
+  error = {
+    email: signal(''),
+    updateEmail: () => {
+      this.signUpForm.get('email');
+      if (this.signUpForm.get('email')!.hasError('required'))
+        this.error.email.set('You must enter a value');
+      else if (this.signUpForm.get('email')!.hasError('email'))
+        this.error.email.set('Not a valid email');
+      else this.error.email.set('');
+    },
+    username: signal(''),
+    updateUsername: () => {
+      this.signUpForm.get('username');
+      if (this.signUpForm.get('username')!.hasError('required'))
+        this.error.username.set('You must enter a value');
+      else if (this.signUpForm.get('username')!.hasError('minlength'))
+        this.error.username.set('Username must be at least 4 characters');
+      else this.error.username.set('');
+    },
+    password: signal(''),
+    updatePassword: () => {
+      this.signUpForm.get('password');
+      if (this.signUpForm.get('password')!.hasError('required'))
+        this.error.password.set('You must enter a value');
+      else if (this.signUpForm.get('password')!.hasError('minlength'))
+        this.error.password.set('Password must be at least 8 characters');
+      else if (this.signUpForm.get('password')!.hasError('pattern'))
+        this.error.password.set(
+          'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+        );
+      else this.error.password.set('');
+    },
+    response: '',
+  };
+
   hide: boolean = true;
 
   signUpForm: FormGroup = new FormGroup({
-    email: new FormControl('', [
-      Validators.email,
-      Validators.required,
-    ]),
+    email: new FormControl('', [Validators.email, Validators.required]),
     username: new FormControl('', [
       Validators.minLength(4),
       Validators.required,
-      Validators.pattern(/^[a-zA-Z0-9]*$/),
     ]),
     password: new FormControl('', [
       Validators.minLength(8),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/g),
       Validators.required,
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
-    ])
+    ]),
   });
 
   constructor(private registerService: RegisterService) {
+    merge(
+      this.signUpForm.get('email')!.statusChanges,
+      this.signUpForm.get('email')!.valueChanges
+    ).subscribe(() => this.error.updateEmail());
+
+    merge(
+      this.signUpForm.get('username')!.statusChanges,
+      this.signUpForm.get('username')!.valueChanges
+    ).subscribe(() => this.error.updateUsername());
+
+    merge(
+      this.signUpForm.get('password')!.statusChanges,
+      this.signUpForm.get('password')!.valueChanges
+    ).subscribe(() => this.error.updatePassword());
   }
 
   register() {
-    console.log(this.signUpForm.value);
-
-    this.error = '';
-
-    let response: any = this.registerService.register(
-      this.signUpForm.value.email,
-      this.signUpForm.value.username,
-      this.signUpForm.value.password
-    );
-
-    if (response.error) {
-      this.error = response.error;
-      return;
-    }
+    // TODO: Implement register
   }
 }

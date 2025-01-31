@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class RegisterService {
 
+  // TODO: Implement register
+
   constructor() { }
 
   register(email: string, username: string, password: string) {

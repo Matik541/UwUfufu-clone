@@ -1,0 +1,69 @@
+<mat-stepper orientation="vertical" #stepper>
+  <mat-step [stepControl]="quizDetailsForm">
+    <form [formGroup]="quizDetailsForm">
+      <ng-template matStepLabel>Details</ng-template>
+      <mat-form-field appearance="outline" class="form-full-width">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          placeholder="Best ..."
+          formControlName="title"
+          name="title"
+          maxlength="50"
+          required
+        />
+        <mat-hint
+          ><span style="align-items: end"
+            >{{ quizDetailsForm.get("title")!.value!.length }}/50</span
+          ></mat-hint
+        >
+        @if (quizDetailsForm.get('title')!.hasError('required')) {
+        <mat-error> Title is required </mat-error>
+        }
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="quizEntriesForm">
+    <form [formGroup]="quizEntriesForm">
+      <ng-template matStepLabel>Entries</ng-template>
+
+      <mat-form-field appearance="outline" class="form-full-width">
+        <mat-label>Entry</mat-label>
+        <input
+          matInput
+          placeholder="eg. Best ..."
+          formControlName="image"
+          name="image"
+          maxlength="50"
+          required
+        />
+        <mat-hint style="display: flex;"
+          ><span style="align-self: end"
+            >{{ quizEntriesForm.get("entries")!.value!.length }}/50</span
+          ></mat-hint
+        >
+        @if (quizEntriesForm.get('entries')!.hasError('required')) {
+        <mat-error> Entry is required </mat-error>
+        }
+      </mat-form-field>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div style="display: flex">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+      <div class="flex-spacer"></div>
+      <button mat-button (click)="stepper.reset()">Create</button>
+    </div>
+  </mat-step>
+</mat-stepper>

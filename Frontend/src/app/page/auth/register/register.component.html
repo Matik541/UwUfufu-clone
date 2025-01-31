@@ -10,10 +10,8 @@
         required
       />
 
-      @if (signUpForm.get('email')?.hasError('required')) {
-      <mat-error>Email required</mat-error>
-      } @if (signUpForm.get('email')?.hasError('email')) {
-      <mat-error>Invalid email</mat-error>
+      @if (signUpForm.get('email')!.invalid) {
+      <mat-error> {{ error.email() }} </mat-error>
       }
     </mat-form-field>
 
@@ -26,13 +24,8 @@
         name="username"
         required
       />
-
-      @if (signUpForm.get('username')?.hasError('required')) {
-      <mat-error>Username required</mat-error>
-      } @if (signUpForm.get('username')?.hasError('minlength')) {
-      <mat-error>Username must be at least {{ 4 }} characters</mat-error>
-      } @if (signUpForm.get('username')?.hasError('pattern')) {
-      <mat-error>Username can contain only characters and numbers</mat-error>
+      @if (signUpForm.get('username')!.invalid) {
+      <mat-error> {{ error.username() }} </mat-error>
       }
     </mat-form-field>
 
@@ -49,17 +42,14 @@
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
 
-      @if (signUpForm.get('password')?.hasError('required')) {
-      <mat-error>Password required</mat-error>
-      } @if (signUpForm.get('password')?.hasError('minlength')) {
-      <mat-error>Password must be at least {{ 8 }} characters</mat-error>
-      } @if (signUpForm.get('password')?.hasError('pattern')) {
-      <mat-error
-        >Password must contain at least one uppercase, one lowercase, one number
-        and one special character</mat-error
-      >
+      @if (signUpForm.get('password')!.invalid) {
+      <mat-error> {{ error.password() }} </mat-error>
       }
     </mat-form-field>
+
+    @if (!!error.response) {
+    <mat-error>{{ error.response }}</mat-error>
+    }
 
     <button type="submit" mat-flat-button>Sign up</button>
   </form>
