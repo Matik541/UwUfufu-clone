@@ -1,0 +1,58 @@
+<div class="auth-container">
+  <form [formGroup]="signUpForm" (ngSubmit)="register()">
+    <mat-form-field class="form-full-width" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" name="email" required />
+
+      @if (signUpForm.get('email')?.hasError('required')) {
+        <mat-error>Email required</mat-error>
+      }
+      @if (signUpForm.get('email')?.hasError('email')) {
+        <mat-error>Invalid email</mat-error>
+      }
+
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width" appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" formControlName="username" name="username" required />
+
+      @if (signUpForm.get('username')?.hasError('required')) {
+        <mat-error>Username required</mat-error>
+      }
+      @if (signUpForm.get('username')?.hasError('minlength')) {
+        <mat-error>Username must be at least {{ 4 }} characters</mat-error>
+      }
+      @if (signUpForm.get('username')?.hasError('pattern')) {
+        <mat-error>Username can contain only characters and numbers</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width" appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" name="password" required />
+
+      @if (signUpForm.get('password')?.hasError('required')) {
+        <mat-error>Password required</mat-error>
+      }
+      @if (signUpForm.get('password')?.hasError('minlength')) {
+        <mat-error>Password must be at least {{ 8 }} characters</mat-error>
+      }
+      @if (signUpForm.get('password')?.hasError('pattern')) {
+        <mat-error>Password must contain at least one uppercase, one lowercase, one number and one special character</mat-error>
+      }
+
+
+    </mat-form-field>
+
+    <button type="submit" mat-flat-button>Sign up</button>
+  </form>
+
+  <div class="divider-group">
+    <mat-divider class="divider"></mat-divider>
+    OR
+    <mat-divider class="divider"></mat-divider>
+  </div>
+
+  <app-oauth></app-oauth>
+</div>
