@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { RegisterService } from './register.service';
 import { OauthComponent } from '../../../components/oauth/oauth.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'auth-register',
@@ -23,12 +24,14 @@ import { OauthComponent } from '../../../components/oauth/oauth.component';
     MatButtonModule,
     MatDividerModule,
     OauthComponent,
+    MatIconModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   error: string = '';
+  hide: boolean = true;
 
   signUpForm: FormGroup = new FormGroup({
     email: new FormControl('', [

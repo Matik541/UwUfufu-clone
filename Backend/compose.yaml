@@ -1,6 +1,7 @@
+version: '3.8'
 services:
   scylla:
-    image: scylladb/scylla
+    image: scylladb/scylla:6.2
     container_name: scylla
     volumes:
       - ./scylla_scripts/migrations:/scylla_scripts/migrations
@@ -11,7 +12,7 @@ services:
     # This is a temporary service that creates the schema and populates the scylla service and then this one shuts down
   scylla-init:
     container_name: scylla-init
-    image: scylladb/scylla
+    image: scylladb/scylla:6.2
     volumes:
       - ./scylla_scripts/initdb.sh:/scylla_scripts/initdb.sh
     entrypoint: [ "bash", "/scylla_scripts/initdb.sh" ]
