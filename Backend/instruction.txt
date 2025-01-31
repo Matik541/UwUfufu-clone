@@ -1,0 +1,10 @@
+1. Run container
+docker-compose up -d
+
+2. Wait until scylla-init close
+
+3. Run docker exec -ti scylla sh
+
+4. Run cd scylla_scripts
+
+5. ./run_migrations.sh
