@@ -40,11 +40,11 @@
           maxlength="50"
           required
         />
-        <mat-hint style="display: flex;"
-          ><span style="align-self: end"
-            >{{ quizEntriesForm.get("entries")!.value!.length }}/50</span
-          ></mat-hint
-        >
+        <mat-hint style="display: flex">
+          <span style="align-self: end">
+            {{ quizEntriesForm.get("entries")!.value!.length }}/50
+          </span>
+        </mat-hint>
         @if (quizEntriesForm.get('entries')!.hasError('required')) {
         <mat-error> Entry is required </mat-error>
         }
