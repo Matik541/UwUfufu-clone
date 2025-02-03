@@ -29,10 +29,10 @@
   <mat-step [stepControl]="quizEntriesForm">
     <ng-template matStepLabel>Entries</ng-template>
     <form [formGroup]="quizEntriesForm">
-      <div formArrayName="entries">
-        <div *ngFor="let entry of entries.controls; let i = index">
-          <div [formGroupName]="i">
-            <mat-form-field appearance="outline" class="form-full-width">
+      <div formArrayName="entries" class="entries">
+        <div *ngFor="let entry of entries.controls; let i = index" class="entry">
+          <div [formGroupName]="i" class="entry-form">
+            <mat-form-field appearance="outline" class="form-full-width" style="">
               <mat-label>Caption</mat-label>
               <input
                 matInput
@@ -65,15 +65,19 @@
               }
             </mat-form-field>
 
-            <button mat-mini-fab (click)="uploadImage(i)">
+            <button mat-fab (click)="uploadImage(i)">
               <mat-icon>upload</mat-icon>
             </button>
 
-            <button mat-mini-fab (click)="removeEntry(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
           </div>
-          <mat-divider></mat-divider>
+          <div class="image-preview">
+            <img [src]="entry.get('image')!.value" />
+          </div>
+          
+          <button mat-fab color="red" (click)="removeEntry(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <!-- <mat-divider></mat-divider> -->
         </div>
       </div>
       <button mat-button (click)="addEntry()">Add Entry</button>
