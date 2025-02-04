@@ -30,9 +30,12 @@
     <ng-template matStepLabel>Entries</ng-template>
     <form [formGroup]="quizEntriesForm">
       <div formArrayName="entries" class="entries">
-        <div *ngFor="let entry of entries.controls; let i = index" class="entry">
-          <div [formGroupName]="i" class="entry-form">
-            <mat-form-field appearance="outline" class="form-full-width" style="">
+        <div *ngFor="let entry of entries.controls; let i = index">
+          <div [formGroupName]="i" class="entry">
+            <mat-form-field
+              appearance="outline"
+              class="form-full-width"
+            >
               <mat-label>Caption</mat-label>
               <input
                 matInput
@@ -47,7 +50,7 @@
                 </span>
               </mat-hint>
               @if (entry.get('caption')!.hasError('required')) {
-              <mat-error> Answer is required </mat-error>
+              <mat-error> Caption is required </mat-error>
               }
             </mat-form-field>
 
@@ -69,15 +72,18 @@
               <mat-icon>upload</mat-icon>
             </button>
 
+            <button mat-fab color="red" (click)="removeEntry(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <mat-card class="image" appearance="outlined">
+              @if (entry.get('image')!.value) {
+              <img [src]="entry.get('image')!.value" alt="Image Preview" />
+              } @else {
+              <mat-icon>image</mat-icon>
+              }
+            </mat-card>
           </div>
-          <div class="image-preview">
-            <img [src]="entry.get('image')!.value" />
-          </div>
-          
-          <button mat-fab color="red" (click)="removeEntry(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <!-- <mat-divider></mat-divider> -->
         </div>
       </div>
       <button mat-button (click)="addEntry()">Add Entry</button>
