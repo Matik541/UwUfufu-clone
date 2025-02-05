@@ -11,9 +11,17 @@
     gap: 1em;
     margin-top: 1em;
 
+    .actions {
+      display: flex;
+      gap: 1em;
+    }
+
     .image {
       grid-row: 1 / span 3;
       grid-column: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       img {
         max-height: 240px;

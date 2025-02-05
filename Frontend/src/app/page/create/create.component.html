@@ -32,10 +32,7 @@
       <div formArrayName="entries" class="entries">
         <div *ngFor="let entry of entries.controls; let i = index">
           <div [formGroupName]="i" class="entry">
-            <mat-form-field
-              appearance="outline"
-              class="form-full-width"
-            >
+            <mat-form-field appearance="outline" class="form-full-width span-2">
               <mat-label>Caption</mat-label>
               <input
                 matInput
@@ -54,39 +51,57 @@
               }
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form-full-width">
-              <mat-label>Image</mat-label>
-              <input
-                matInput
-                placeholder=""
-                formControlName="image"
-                name="image"
-                required
-              />
-              @if (entry.get('image')!.hasError('required')) {
-              <mat-error> Image is required </mat-error>
-              }
-            </mat-form-field>
+            <div class="actions">
+              <button mat-fab (click)="uploadImage(i)">
+                <mat-icon>upload</mat-icon>
+              </button>
 
-            <button mat-fab (click)="uploadImage(i)">
-              <mat-icon>upload</mat-icon>
-            </button>
+              <button mat-fab (click)="removeEntry(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
 
-            <button mat-fab color="red" (click)="removeEntry(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
+              <button mat-fab (click)="addEntry()">
+                <!-- variable_add -->
+                <mat-icon>variable_add</mat-icon>
+              </button>
+            </div>
 
             <mat-card class="image" appearance="outlined">
               @if (entry.get('image')!.value) {
               <img [src]="entry.get('image')!.value" alt="Image Preview" />
               } @else {
-              <mat-icon>image</mat-icon>
+              <button
+                extended
+                mat-fab
+                color="primary"
+                (click)="uploadImage(i)"
+              >
+                Upload Image <mat-icon>upload</mat-icon>
+              </button>
+
+              <div class="divider-group">
+                <mat-divider class="divider"></mat-divider>
+                OR
+                <mat-divider class="divider"></mat-divider>
+              </div>
+
+
+              <mat-form-field appearance="outline" class="form-full-width span-2">
+                <mat-label>Image</mat-label>
+                <input
+                  matInput
+                  placeholder=""
+                  formControlName="image"
+                  name="image"
+                  required
+                />
+              </mat-form-field>
+  
               }
             </mat-card>
           </div>
         </div>
       </div>
-      <button mat-button (click)="addEntry()">Add Entry</button>
 
       <div>
         <button mat-button matStepperPrevious>Back</button>

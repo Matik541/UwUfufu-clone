@@ -31,3 +31,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .search .mat-mdc-form-field-icon-suffix {
   padding-right: 8px;
 }
+
+
+.divider-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  margin: 1em 0;
+  
+  .divider {
+    flex-grow: 1;
+    margin: 0;
+  }
+}
