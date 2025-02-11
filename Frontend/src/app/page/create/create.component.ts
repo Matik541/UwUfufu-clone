@@ -42,25 +42,11 @@ export class CreateComponent {
     ]),
   });
   quizEntriesForm = new FormGroup({
-    entries: new FormArray([
-      new FormGroup({
-        image: new FormControl('', [Validators.required]),
-        caption: new FormControl('', [
-          Validators.required,
-          Validators.maxLength(50),
-        ]),
-      }),
-      new FormGroup({
-        image: new FormControl('', [Validators.required]),
-        caption: new FormControl('', [
-          Validators.required,
-          Validators.maxLength(50),
-        ]),
-      }),
-    ]),
+    entries: new FormArray([]),
   });
 
-  constructor() {}
+  constructor() {
+  }
 
   get entries() {
     return this.quizEntriesForm.get('entries') as FormArray;
@@ -82,12 +68,7 @@ export class CreateComponent {
     this.entries.removeAt(index);
   }
 
-  uploadImage(index: number) {
-
-    
-
-
-  }
+  uploadImage(index: number) {}
 
   submit() {
     console.log(this.quizDetailsForm.value);

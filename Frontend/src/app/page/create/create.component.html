@@ -32,12 +32,59 @@
       <div formArrayName="entries" class="entries">
         <div *ngFor="let entry of entries.controls; let i = index">
           <div [formGroupName]="i" class="entry">
-
             <mat-card class="image-card" appearance="outlined">
               @if (entry.get('image')!.value) {
-                <div class="upload-image">
-                  <img [src]="entry.get('image')!.value" alt="Image Preview" />
+              <img [src]="entry.get('image')!.value" alt="Image Preview" />
+              } @else {
+              <div class="empty-image">
+                <button
+                  extended
+                  mat-fab=""
+                  color="primary"
+                  (click)="uploadImage(i)"
+                >
+                  Upload Image <mat-icon>upload</mat-icon>
+                </button>
+
+                <div class="divider-group">
+                  <mat-divider class="divider"></mat-divider>
+                  OR
+                  <mat-divider class="divider"></mat-divider>
                 </div>
+
+                <mat-form-field
+                  appearance="outline"
+                  class="form-full-width span-2"
+                >
+                  <mat-label>Image</mat-label>
+                  <input
+                    matInput
+                    placeholder=""
+                    formControlName="image"
+                    name="image"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+              }
+            </mat-card>
+
+            <mat-form-field appearance="outline" class="form-full-width span-2">
+              <mat-label>Caption</mat-label>
+              <input
+                matInput
+                formControlName="caption"
+                name="caption"
+                maxlength="50"
+                required
+              />
+              <mat-hint>
+                <span style="align-items: end">
+                  {{ entry.get("caption")!.value!.length }}/50
+                </span>
+              </mat-hint>
+              @if (entry.get('caption')!.hasError('required')) {
+              <mat-error> Caption is required </mat-error>
               }
               <mat-card-content class="upload-form">
                 <button
@@ -69,39 +116,51 @@
                   />
                 </mat-form-field>
               </mat-card-content>
-            </mat-card>
+            </mat-form-field>
+          </div>
 
-            <div class="actions">
-              <mat-form-field appearance="outline" class="form-full-width">
-                <mat-label>Caption</mat-label>
-                <input
-                  matInput
-                  formControlName="caption"
-                  name="caption"
-                  maxlength="50"
-                  required
-                />
-                <mat-hint>
-                  <span style="align-items: end">
-                    {{ entry.get("caption")!.value!.length }}/50
-                  </span>
-                </mat-hint>
-                @if (entry.get('caption')!.hasError('required')) {
-                <mat-error> Caption is required </mat-error>
-                }
-              </mat-form-field>
+          <div class="actions">
+            <mat-form-field appearance="outline" class="form-full-width">
+              <mat-label>Caption</mat-label>
+              <input
+                matInput
+                formControlName="caption"
+                name="caption"
+                maxlength="50"
+                required
+              />
+              <mat-hint>
+                <span style="align-items: end">
+                  {{ entry.get("caption")!.value!.length }}/50
+                </span>
+              </mat-hint>
+              @if (entry.get('caption')!.hasError('required')) {
+              <mat-error> Caption is required </mat-error>
+              }
+            </mat-form-field>
 
-              <button mat-fab (click)="addEntry()">
-                <mat-icon>variable_add</mat-icon>
-              </button>
+            <button mat-fab (click)="addEntry()">
+              <mat-icon>variable_add</mat-icon>
+            </button>
 
-              <button mat-fab (click)="removeEntry(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-
-            </div>
+            <button mat-fab (click)="removeEntry(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-fab (click)="addEntry()">
+              <mat-icon>add</mat-icon>
+            </button>
           </div>
         </div>
+      </div>
+
+      <div class="empty">
+        @if (entries.length == 0) {
+        <p>No entries yet.</p>
+        }
+        <button mat-fab extended (click)="addEntry()">
+          <mat-icon>add</mat-icon>
+          Add Entry
+        </button>
       </div>
 
       <div>
