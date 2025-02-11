@@ -32,73 +32,74 @@
       <div formArrayName="entries" class="entries">
         <div *ngFor="let entry of entries.controls; let i = index">
           <div [formGroupName]="i" class="entry">
-            <mat-form-field appearance="outline" class="form-full-width span-2">
-              <mat-label>Caption</mat-label>
-              <input
-                matInput
-                formControlName="caption"
-                name="caption"
-                maxlength="50"
-                required
-              />
-              <mat-hint>
-                <span style="align-items: end">
-                  {{ entry.get("caption")!.value!.length }}/50
-                </span>
-              </mat-hint>
-              @if (entry.get('caption')!.hasError('required')) {
-              <mat-error> Caption is required </mat-error>
+
+            <mat-card class="image-card" appearance="outlined">
+              @if (entry.get('image')!.value) {
+                <div class="upload-image">
+                  <img [src]="entry.get('image')!.value" alt="Image Preview" />
+                </div>
               }
-            </mat-form-field>
+              <mat-card-content class="upload-form">
+                <button
+                  extended
+                  mat-fab
+                  color="primary"
+                  (click)="uploadImage(i)"
+                >
+                  Upload Image <mat-icon>upload</mat-icon>
+                </button>
+
+                <div class="divider-group">
+                  <mat-divider class="divider"></mat-divider>
+                  OR
+                  <mat-divider class="divider"></mat-divider>
+                </div>
+
+                <mat-form-field
+                  appearance="outline"
+                  class="form-full-width span-2"
+                >
+                  <mat-label>Image</mat-label>
+                  <input
+                    matInput
+                    placeholder=""
+                    formControlName="image"
+                    name="image"
+                    required
+                  />
+                </mat-form-field>
+              </mat-card-content>
+            </mat-card>
 
             <div class="actions">
-              <button mat-fab (click)="uploadImage(i)">
-                <mat-icon>upload</mat-icon>
+              <mat-form-field appearance="outline" class="form-full-width">
+                <mat-label>Caption</mat-label>
+                <input
+                  matInput
+                  formControlName="caption"
+                  name="caption"
+                  maxlength="50"
+                  required
+                />
+                <mat-hint>
+                  <span style="align-items: end">
+                    {{ entry.get("caption")!.value!.length }}/50
+                  </span>
+                </mat-hint>
+                @if (entry.get('caption')!.hasError('required')) {
+                <mat-error> Caption is required </mat-error>
+                }
+              </mat-form-field>
+
+              <button mat-fab (click)="addEntry()">
+                <mat-icon>variable_add</mat-icon>
               </button>
 
               <button mat-fab (click)="removeEntry(i)">
                 <mat-icon>delete</mat-icon>
               </button>
 
-              <button mat-fab (click)="addEntry()">
-                <!-- variable_add -->
-                <mat-icon>variable_add</mat-icon>
-              </button>
             </div>
-
-            <mat-card class="image" appearance="outlined">
-              @if (entry.get('image')!.value) {
-              <img [src]="entry.get('image')!.value" alt="Image Preview" />
-              } @else {
-              <button
-                extended
-                mat-fab
-                color="primary"
-                (click)="uploadImage(i)"
-              >
-                Upload Image <mat-icon>upload</mat-icon>
-              </button>
-
-              <div class="divider-group">
-                <mat-divider class="divider"></mat-divider>
-                OR
-                <mat-divider class="divider"></mat-divider>
-              </div>
-
-
-              <mat-form-field appearance="outline" class="form-full-width span-2">
-                <mat-label>Image</mat-label>
-                <input
-                  matInput
-                  placeholder=""
-                  formControlName="image"
-                  name="image"
-                  required
-                />
-              </mat-form-field>
-  
-              }
-            </mat-card>
           </div>
         </div>
       </div>
