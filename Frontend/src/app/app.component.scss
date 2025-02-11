@@ -9,8 +9,8 @@ app-navbar {
 
 main {
   padding: 1em;
-  padding-top: 88px;
-  min-height: 100vh;
+  margin-top: 88px;
+  min-height: calc(100vh - 88px);
 }
 
 app-footer {
