@@ -1,124 +1,58 @@
-<mat-stepper orientation="horizontal" #stepper>
-  <mat-step [stepControl]="quizDetailsForm">
-    <ng-template matStepLabel>Details</ng-template>
-    <form [formGroup]="quizDetailsForm">
-      <mat-form-field appearance="outline" class="form-full-width">
-        <mat-label>Title</mat-label>
-        <input
-          matInput
-          placeholder="Best ..."
-          formControlName="title"
-          name="title"
-          maxlength="50"
-          required
-        />
-        <mat-hint>
-          <span style="align-items: end">
-            {{ quizDetailsForm.get("title")!.value!.length }}/50
-          </span>
-        </mat-hint>
-        @if (quizDetailsForm.get('title')!.hasError('required')) {
-        <mat-error> Title is required </mat-error>
-        }
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="quizEntriesForm">
-    <ng-template matStepLabel>Entries</ng-template>
-    <form [formGroup]="quizEntriesForm">
-      <div formArrayName="entries" class="entries">
-        <div *ngFor="let entry of entries.controls; let i = index">
-          <div [formGroupName]="i" class="entry">
-            <mat-card class="image-card" appearance="outlined">
-              @if (entry.get('image')!.value) {
-              <img [src]="entry.get('image')!.value" alt="Image Preview" />
-              } @else {
-              <div class="empty-image">
-                <button
-                  extended
-                  mat-fab=""
-                  color="primary"
-                  (click)="uploadImage(i)"
-                >
-                  Upload Image <mat-icon>upload</mat-icon>
-                </button>
-
-                <div class="divider-group">
-                  <mat-divider class="divider"></mat-divider>
-                  OR
-                  <mat-divider class="divider"></mat-divider>
-                </div>
-
-                <mat-form-field
-                  appearance="outline"
-                  class="form-full-width span-2"
-                >
-                  <mat-label>Image</mat-label>
-                  <input
-                    matInput
-                    placeholder=""
-                    formControlName="image"
-                    name="image"
-                    required
-                  />
-                </mat-form-field>
+<div class="container">
+  <form [formGroup]="quizDetailsForm">
+    <mat-form-field appearance="outline" class="form-full-width">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        placeholder="Best ..."
+        formControlName="title"
+        name="title"
+        maxlength="50"
+        required
+      />
+      <mat-hint>
+        <span style="align-items: end">
+          {{ quizDetailsForm.get("title")!.value!.length }}/50
+        </span>
+      </mat-hint>
+      @if (quizDetailsForm.get('title')!.hasError('required')) {
+      <mat-error> Title is required </mat-error>
+      }
+    </mat-form-field>
+  </form>
+  <form [formGroup]="quizEntriesForm">
+    <div formArrayName="entries" class="entries">
+      <div *ngFor="let entry of entries.controls; let i = index">
+        <div [formGroupName]="i" class="entry">
+          <mat-card class="image-card" appearance="outlined">
+            @if (entry.get('image')!.value) {
+            <img [src]="entry.get('image')!.value" alt="Image Preview" />
+            } @else {
+            <div class="empty-image">
+              <button mat-stroked-button color="primary" (click)="uploadImage(i)">
+                Upload Image <mat-icon>upload</mat-icon>
+              </button>
+  
+              <div class="divider-group">
+                <mat-divider class="divider"></mat-divider>
+                OR
+                <mat-divider class="divider"></mat-divider>
               </div>
-              }
-            </mat-card>
-
-            <mat-form-field appearance="outline" class="form-full-width span-2">
-              <mat-label>Caption</mat-label>
-              <input
-                matInput
-                formControlName="caption"
-                name="caption"
-                maxlength="50"
-                required
-              />
-              <mat-hint>
-                <span style="align-items: end">
-                  {{ entry.get("caption")!.value!.length }}/50
-                </span>
-              </mat-hint>
-              @if (entry.get('caption')!.hasError('required')) {
-              <mat-error> Caption is required </mat-error>
-              }
-              <mat-card-content class="upload-form">
-                <button
-                  extended
-                  mat-fab
-                  color="primary"
-                  (click)="uploadImage(i)"
-                >
-                  Upload Image <mat-icon>upload</mat-icon>
-                </button>
-
-                <div class="divider-group">
-                  <mat-divider class="divider"></mat-divider>
-                  OR
-                  <mat-divider class="divider"></mat-divider>
-                </div>
-
-                <mat-form-field
-                  appearance="outline"
-                  class="form-full-width span-2"
-                >
-                  <mat-label>Image</mat-label>
-                  <input
-                    matInput
-                    placeholder=""
-                    formControlName="image"
-                    name="image"
-                    required
-                  />
-                </mat-form-field>
-              </mat-card-content>
-            </mat-form-field>
-          </div>
-
+  
+              <mat-form-field appearance="outline" class="form-full-width span-2">
+                <mat-label>Image</mat-label>
+                <input
+                  matInput
+                  placeholder=""
+                  formControlName="image"
+                  name="image"
+                  required
+                />
+              </mat-form-field>
+            </div>
+            }
+          </mat-card>
+  
           <div class="actions">
             <mat-form-field appearance="outline" class="form-full-width">
               <mat-label>Caption</mat-label>
@@ -138,21 +72,14 @@
               <mat-error> Caption is required </mat-error>
               }
             </mat-form-field>
-
-            <button mat-fab (click)="addEntry()">
-              <mat-icon>variable_add</mat-icon>
-            </button>
-
+  
             <button mat-fab (click)="removeEntry(i)">
               <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-fab (click)="addEntry()">
-              <mat-icon>add</mat-icon>
             </button>
           </div>
         </div>
       </div>
-
+  
       <div class="empty">
         @if (entries.length == 0) {
         <p>No entries yet.</p>
@@ -162,21 +89,7 @@
           Add Entry
         </button>
       </div>
-
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div style="display: flex">
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-      <div class="flex-spacer"></div>
-      <button mat-button (click)="stepper.reset()">Create</button>
     </div>
-  </mat-step>
-</mat-stepper>
+  </form>
+  
+</div>

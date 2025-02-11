@@ -1,25 +1,24 @@
-.entries {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.container {
+  max-width: 1200px;
+
+  display: flex;
+  flex-direction: column;
   gap: 1em;
-  
+
   @media (min-width: 600px) {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
-  @media (min-width: 1200px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
   .empty {
+    grid-column: 2;
+    grid-row: auto;
     display: flex;
     flex-direction: column;
     gap: 1em;
     justify-content: center;
     align-items: center;
-    
+    min-height: 240px;
   }
 
   .entry {
@@ -59,7 +58,6 @@
       flex-direction: column;
       height: 240px;
       padding: 1em;
-
     }
 
     .image {

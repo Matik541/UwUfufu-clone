@@ -46,6 +46,7 @@ export class CreateComponent {
   });
 
   constructor() {
+    this.addEntry();
   }
 
   get entries() {
