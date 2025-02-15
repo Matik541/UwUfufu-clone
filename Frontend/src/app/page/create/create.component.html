@@ -17,8 +17,50 @@
       </mat-hint>
       @if (quizDetailsForm.get('title')!.hasError('required')) {
       <mat-error> Title is required </mat-error>
+      } @if (quizDetailsForm.get('title')!.hasError('maxlength')) {
+      <mat-error> Title cannot exceed 50 characters </mat-error>
       }
     </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="This quiz is about ..."
+        formControlName="description"
+        name="description"
+        maxlength="500"
+      ></textarea>
+      <mat-hint>
+        <span>
+          {{ quizDetailsForm.get("description")!.value!.length }}/500
+        </span>
+      </mat-hint>
+      @if (quizDetailsForm.get('description')!.hasError('maxlength')) {
+      <mat-error> Description cannot exceed 500 characters </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-checkbox formControlName="anonymous" name="anonymous" class="toggle">
+      Anonymous
+    </mat-checkbox>
+
+    <div>
+      <table mat-table [dataSource]="gameModesArray">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let gameMode"> {{gameMode.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="min">
+          <th mat-header-cell *matHeaderCellDef> Min </th>
+          <td mat-cell *matCellDef="let gameMode"> {{quizEntriesForm.controls.entries.length}}/{{gameMode.min}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="['name', 'min']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'min'];"></tr>
+      </table> 
+    </div>
   </form>
   <form [formGroup]="quizEntriesForm">
     <div formArrayName="entries" class="entries">
@@ -29,17 +71,24 @@
             <img [src]="entry.get('image')!.value" alt="Image Preview" />
             } @else {
             <div class="empty-image">
-              <button mat-stroked-button color="primary" (click)="uploadImage(i)">
+              <button
+                mat-stroked-button
+                color="primary"
+                (click)="uploadImage(i)"
+              >
                 Upload Image <mat-icon>upload</mat-icon>
               </button>
-  
+
               <div class="divider-group">
                 <mat-divider class="divider"></mat-divider>
                 OR
                 <mat-divider class="divider"></mat-divider>
               </div>
-  
-              <mat-form-field appearance="outline" class="form-full-width span-2">
+
+              <mat-form-field
+                appearance="outline"
+                class="form-full-width span-2"
+              >
                 <mat-label>Image</mat-label>
                 <input
                   matInput
@@ -52,7 +101,7 @@
             </div>
             }
           </mat-card>
-  
+
           <div class="actions">
             <mat-form-field appearance="outline" class="form-full-width">
               <mat-label>Caption</mat-label>
@@ -70,16 +119,18 @@
               </mat-hint>
               @if (entry.get('caption')!.hasError('required')) {
               <mat-error> Caption is required </mat-error>
+              } @if (entry.get('caption')!.hasError('maxlength')) {
+              <mat-error> Caption cannot exceed 50 characters </mat-error>
               }
             </mat-form-field>
-  
+
             <button mat-fab (click)="removeEntry(i)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
         </div>
       </div>
-  
+
       <div class="empty">
         @if (entries.length == 0) {
         <p>No entries yet.</p>
@@ -91,5 +142,4 @@
       </div>
     </div>
   </form>
-  
 </div>

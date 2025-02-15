@@ -24,14 +24,17 @@
 
   .details {
     position: sticky;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    height: fit-content;
   }
 
   .entry {
     position: relative;
-    display: flex;
+    display: flex;  
     flex-direction: column;
     gap: 1em;
-    margin-top: 1em;
 
     .image-card {
       display: flex;

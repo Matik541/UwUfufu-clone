@@ -1,3 +1,4 @@
+import { GameModesArray } from '../../data/game-modes';
 import { Component } from '@angular/core';
 import {
   Validators,
@@ -9,13 +10,13 @@ import {
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-create',
   imports: [
@@ -23,11 +24,12 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatStepperModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
     MatCardModule,
+    MatCheckboxModule,
+    MatTableModule,
     CommonModule,
   ],
   templateUrl: './create.component.html',
@@ -36,14 +38,14 @@ import { MatCardModule } from '@angular/material/card';
 export class CreateComponent {
   quizDetailsForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(500),
-    ]),
+    description: new FormControl('', [Validators.maxLength(500)]),
+    anonymous: new FormControl(false),
   });
   quizEntriesForm = new FormGroup({
     entries: new FormArray([]),
   });
+
+  gameModesArray = GameModesArray;
 
   constructor() {
     this.addEntry();
